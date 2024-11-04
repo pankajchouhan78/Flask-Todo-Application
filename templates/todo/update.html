@@ -1,0 +1,62 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Todo{% endblock %}
+
+{% block main %}
+
+<div class="container m-5">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/css/bootstrap-switch-button.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap-switch-button@1.1.0/dist/bootstrap-switch-button.min.js"></script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Create Todo</h1>
+                        <a class="btn-close" href="{{ url_for('todo_blueprint.index') }}" role="button" aria-label="Close"></a>
+
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="col-md-12 m-2">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title" value="{{ todo.title }}" id="title" required>
+                        </div>
+
+                        <div class="col-12 m-2">
+                            <label for="desc">Description</label>
+                            <textarea class="form-control" id="desc" name="desc" rows="3" required>{{ todo.description }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-check">
+                            <input type="checkbox" data-toggle="switchbutton" id="gridCheck" name="is_complated" 
+                            {% if todo.is_complated %}
+                                checked
+                            {% endif %}
+                            data-onstyle="primary" data-offstyle="secondary" value="1">
+                            <label class="form-check-label" for="gridCheck">Completed</label>            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-secondary" href="{{ url_for('todo_blueprint.index') }}"  role="button">Close</a>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Automatically show the modal when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        modal.show();
+    });
+</script>
+
+{% endblock %}
